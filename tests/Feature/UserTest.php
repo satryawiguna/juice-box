@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -113,6 +112,41 @@ class UserTest extends TestCase
                 'type' => 'SUCCESS',
                 'code_status' => 200,
                 'message' => 'You have logged out',
+            ]);
+    }
+
+    /** @test */
+    public function it_can_get_user_by_id()
+    {
+        $user = \App\Models\User::factory()->create([
+            'email' => 'testuser1@domain.com',
+            'username' => 'testuser1',
+            'password' => bcrypt('password123'),
+            'status' => 'ENABLE'
+        ]);
+
+        $this->actingAs($user);
+
+        $response = $this->getJson('/api/user/' . $user->id);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'type',
+                'code_status',
+                'result' => [
+                    'id',
+                    'email',
+                    'username',
+                    'status'
+                ],
+            ])
+            ->assertJson([
+                'result' => [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'username' => $user->username,
+                    'status' => $user->status,
+                ],
             ]);
     }
 }
