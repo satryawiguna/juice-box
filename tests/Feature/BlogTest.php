@@ -156,4 +156,71 @@ class BlogTest extends TestCase
 
         $this->assertDatabaseHas('posts', ['title' => 'Title blog one']);
     }
+
+    /** @test */
+    public function it_can_update_a_post()
+    {
+        $this->artisan('db:seed');
+
+        $user = \App\Models\User::factory()->create([
+            'email' => 'testuser1@domain.com',
+            'username' => 'testuser1',
+            'password' => bcrypt('password123'),
+            'status' => 'ENABLE'
+        ]);
+
+        $this->actingAs($user);
+
+        $post = \App\Models\Post::factory()->create([
+            "title" => "Title blog one",
+            "content" => "Title blog one content"
+        ]);
+
+        $updateData = [
+            "title" => "Updated blog title",
+            "content" => "Updated blog content"
+        ];
+
+        $response = $this->patchJson("/api/blog/post/{$post->id}", $updateData);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'type' => 'SUCCESS',
+                'code_status' => 200,
+                'result' => true
+            ]);
+
+        $this->assertDatabaseHas('posts', ['title' => 'Updated blog title']);
+    }
+
+    /** @test */
+    public function it_can_delete_a_post()
+    {
+        $this->artisan('db:seed');
+
+        $user = \App\Models\User::factory()->create([
+            'email' => 'testuser1@domain.com',
+            'username' => 'testuser1',
+            'password' => bcrypt('password123'),
+            'status' => 'ENABLE'
+        ]);
+
+        $this->actingAs($user);
+
+        $post = \App\Models\Post::factory()->create([
+            "title" => "Title blog one",
+            "content" => "Title blog one content"
+        ]);
+
+        $response = $this->deleteJson("/api/blog/post/{$post->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'type',
+                'code_status',
+                'message'
+            ]);
+
+        $this->assertDatabaseMissing('posts', ['id' => $post->id]);
+    }
 }
