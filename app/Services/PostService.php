@@ -113,7 +113,7 @@ class PostService extends BaseService implements IPostService
         return $response;
     }
 
-    public function getPage(string $id): GenericObjectResponse
+    public function getPost(string $id): GenericObjectResponse
     {
         $response = new GenericObjectResponse();
 
@@ -141,7 +141,7 @@ class PostService extends BaseService implements IPostService
         return $response;
     }
 
-    public function storePage(PostStoreRequest $request): GenericObjectResponse
+    public function storePost(PostStoreRequest $request): GenericObjectResponse
     {
         $response = new GenericObjectResponse();
 
@@ -179,7 +179,7 @@ class PostService extends BaseService implements IPostService
         return $response;
     }
 
-    public function updatePage(string $id, PostUpdateRequest $request): GenericResponse
+    public function updatePost(string $id, PostUpdateRequest $request): GenericResponse
     {
         $response = new GenericResponse();
 
@@ -217,7 +217,7 @@ class PostService extends BaseService implements IPostService
         return $response;
     }
 
-    public function destroyPage(string $id): BaseResponse
+    public function destroyPost(string $id): BaseResponse
     {
         $response = new BaseResponse();
 

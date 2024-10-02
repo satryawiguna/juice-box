@@ -22,11 +22,11 @@ interface IPostService
 
     public function fetchAllSearchAndPaginationPages(PostSearchAndPaginationRequest $request): GenericListBySearchAndPaginationResponse;
 
-    public function getPage(string $id): GenericObjectResponse;
+    public function getPost(string $id): GenericObjectResponse;
 
-    public function storePage(PostStoreRequest $request): GenericObjectResponse;
+    public function storePost(PostStoreRequest $request): GenericObjectResponse;
 
-    public function updatePage(string $id, PostUpdateRequest $request): GenericResponse;
+    public function updatePost(string $id, PostUpdateRequest $request): GenericResponse;
 
-    public function destroyPage(string $id): BaseResponse;
+    public function destroyPost(string $id): BaseResponse;
 }

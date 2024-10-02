@@ -56,7 +56,7 @@ class PostController extends ApiBaseController
 
     public function show(string $id)
     {
-        $page = $this->_pageService->getPage($id);
+        $page = $this->_pageService->getPost($id);
 
         if ($page->isError()) {
             return $this->getErrorLatestJsonResponse($page);
@@ -67,7 +67,7 @@ class PostController extends ApiBaseController
 
     public function store(PostStoreRequest $request)
     {
-        $storePage = $this->_pageService->storePage($request);
+        $storePage = $this->_pageService->storePost($request);
 
         if ($storePage->isError()) {
             return $this->getErrorLatestJsonResponse($storePage);
@@ -78,7 +78,7 @@ class PostController extends ApiBaseController
 
     public function update(string $id, PostUpdateRequest $request)
     {
-        $updatePage = $this->_pageService->updatePage($id, $request);
+        $updatePage = $this->_pageService->updatePost($id, $request);
 
         if ($updatePage->isError()) {
             return $this->getErrorLatestJsonResponse($updatePage);
@@ -89,7 +89,7 @@ class PostController extends ApiBaseController
 
     public function destroy(string $id)
     {
-        $destroyPage = $this->_pageService->destroyPage($id);
+        $destroyPage = $this->_pageService->destroyPost($id);
 
         if ($destroyPage->isError()) {
             return $this->getErrorLatestJsonResponse($destroyPage);
